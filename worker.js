@@ -1,59 +1,70 @@
 (function() {
   'use strict';
 
-  console.log('==========================================');
+  var LOCAL_FILES = [
+    'index.html',
+    'app.js'
+  ];
 
+  var STATIC_CACHE_ID = 'static-cache-v1';
+  var REDDIT_CACHE_ID = 'reddit-cache-v1';
+
+  // add polyfill
   importScripts("lib/sw-cache-polyfill.js");
 
-  self.addEventListener('install', function(event) {
+  // add events
+  self.addEventListener('install', onInstall);
+  self.addEventListener('activate', onActivate);
+  self.addEventListener('fetch', onFetch);
+
+
+  function onInstall(e) {
     console.log('install');
-    event.waitUntil(
+    e.waitUntil(
       caches
-        .open('static-cache-v1')
+        .open(STATIC_CACHE_ID)
         .then(function(cache) {
-          return cache.addAll([
-            "/uwc7-semi/index.html",
-            "/uwc7-semi/app.js"
-          ]);
+          return cache.addAll(LOCAL_FILES);
         })
     );
-  });
+  }
 
-  self.addEventListener('activate', function(event) {
+  function onActivate(e) {
     console.log('activate');
-  });
+  }
 
-  self.addEventListener("fetch", function (event) {
-    var request = event.request;
 
-    console.log(event.request.url);
+  function onFetch(e) {
+    var request = e.request;
 
-    event.respondWith(
+    console.log(e.request.url);
+
+    e.respondWith(
       caches
         .match(request)
-        .then(function(response) {
+        .then(function (response) {
           console.log('from cache', response);
 
-          if(response) return response;
+          if (response) return response;
 
           return fetch(request)
-            .then(function(response) {
+            .then(function (response) {
               console.log('fetched', response);
               var response2 = response.clone();
               var response3 = response.clone();
 
-              if(/.reddit.com/.test(response2.url)) {
+              if (/.reddit.com/.test(response2.url)) {
                 console.log('hello reddit');
 
                 caches
-                  .open('reddit-cache-v1')
-                  .then(function(cache) {
+                  .open(REDDIT_CACHE_ID)
+                  .then(function (cache) {
                     cache.put(request, response2);
                   });
 
                 response3
                   .json()
-                  .then(function(json) {
+                  .then(function (json) {
                     console.log('json', json);
                   });
               }
@@ -62,6 +73,6 @@
             });
         })
     );
-  });
+  }
 
 })();

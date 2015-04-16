@@ -3,10 +3,10 @@ if('serviceWorker' in navigator) {
     .serviceWorker
     .register('/uwc7-semi/worker.js', { scope: '/uwc7-semi/' })
     .then(function(reg) {
-      console.log('Registration succeeded. Scope is ' + reg.scope);
+      console.info('Service worker registered! Scope:', reg.scope);
     })
     .catch(function(error) {
-      console.log('Registration failed with ' + error);
+      console.error('Service worker error!', error);
     });
 }
 
