@@ -1,0 +1,40 @@
+{
+  "name": "uwc-reddit-reader",
+  "version": "1.0.0",
+  "description": "UWC JS 7 semi",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yuristrelets/uwc7.git"
+  },
+  "keywords": [
+    "uwc",
+    "gitter"
+  ],
+  "author": {
+    "name": "Yuri Strelets",
+    "email": "yuristrelets@gmail.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yuristrelets/uwc7-semi/issues"
+  },
+  "homepage": "https://github.com/yuristrelets/uwc7-semi",
+  "dependencies": {
+    "babel": "^5.0.8",
+    "babel-core": "^5.0.8",
+    "babel-loader": "^5.0.0",
+    "css-loader": "^0.9.1",
+    "exports-loader": "^0.6.2",
+    "extract-text-webpack-plugin": "^0.5.0",
+    "file-loader": "^0.8.1",
+    "less": "^2.5.0",
+    "less-loader": "^2.2.0",
+    "style-loader": "^0.9.0",
+    "url-loader": "^0.5.5",
+    "webpack": "^1.7.3"
+  }
+}
