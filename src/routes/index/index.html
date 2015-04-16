@@ -1,0 +1,25 @@
+<div>
+  12345 {{ ::vm.title }}
+
+  <div ng-repeat="item in vm.items.children">
+    <img ng-src="{{ ::item.data.thumbnail }}"
+         ng-if="item.data.thumbnail">
+
+    <strong>
+      <a ng-href="{{ ::item.data.url }}"
+         target="_blank">
+        {{ ::item.data.title }}
+      </a>
+    </strong>
+    <br>
+
+    <small>
+      Author: {{ ::item.data.author }}
+      <a ng-href="{{ 'http://reddit.com' + item.data.permalink }}" target="_blank">
+        {{ ::item.data.num_comments }} comments
+      </a>
+    </small>
+
+  </div>
+
+</div>
