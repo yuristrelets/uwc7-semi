@@ -10,7 +10,7 @@
   var REDDIT_CACHE_ID = 'reddit-cache-v1';
 
   // add polyfill
-  importScripts("lib/sw-cache-polyfill.js");
+  importScripts("build/js/sw-cache-polyfill.js");
 
   // add events
   self.addEventListener('install', onInstall);
@@ -20,13 +20,13 @@
 
   function onInstall(e) {
     console.log('install');
-    e.waitUntil(
+    /*e.waitUntil(
       caches
         .open(STATIC_CACHE_ID)
         .then(function(cache) {
           return cache.addAll(LOCAL_FILES);
         })
-    );
+    );*/
   }
 
   function onActivate(e) {
