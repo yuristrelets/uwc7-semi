@@ -7,27 +7,29 @@
 
   <div class="media-body">
     <h4 class="media-heading">
-      <a ng-href="{{ item.permalink | redditUrl }}" target="_blank">{{ ::item.title }}</a>
+      <a ui-sref="app.comments({ subreddit: item.subreddit, id: item.id })" ng-if="!noLink">
+        <span ng-bind-html="item.title"></span>
+      </a>
+
+      <span ng-if="noLink"
+            ng-bind-html="item.title">
+      </span>
     </h4>
 
     <div>
       <span class="label label-primary">{{ ::item.domain }}</span>
 
-          <span class="label label-default">
-            <span class="glyphicon glyphicon-arrow-up"></span> {{ ::item.score }}
-          </span>
+      <span class="label label-default">
+        <span class="glyphicon glyphicon-arrow-up"></span> {{ ::item.score }}
+      </span>
 
-          <span class="label label-default">
-            <span class="glyphicon glyphicon-comment"></span> {{ ::item.num_comments }}
-          </span>
+      <span class="label label-default">
+        <span class="glyphicon glyphicon-comment"></span> {{ ::item.num_comments }}
+      </span>
     </div>
 
     <div class="info">
       {{ ::item.created_utc | timeago }} by <span class="author">{{ ::item.author }}</span>
     </div>
-
-    <!--<a ng-href="{{ ::item.url }}" target="_blank">
-      {{ ::item.num_comments }} comments
-    </a>-->
   </div>
 </div>

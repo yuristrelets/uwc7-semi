@@ -1,5 +1,34 @@
-<div>
+<div ng-if="item">
+  <nav class="navbar navbar-default navbar-fixed-top navbar-toolbar">
+    <div class="container-fluid">
+      <button class="btn btn-default" ng-click="back()">
+        <span class="glyphicon glyphicon-arrow-left"></span> Go back
+      </button>
 
-  Comments
+      <button class="btn btn-default" ng-click="reload()">
+        <span class="glyphicon glyphicon-refresh"></span>
+      </button>
+    </div>
+  </nav>
+
+  <list-item item="item"
+             no-link="true">
+  </list-item>
+
+  <p class="article-body"
+     ng-show="item.selftext"
+     markdown="item.selftext"
+     external-linker>
+  </p>
+
+  <p class="article-link">
+    <a ng-href="{{ ::item.url }}" target="_blank">Open link ({{ ::item.domain }})</a>
+  </p>
+
+  <div class="container-comments" external-linker>
+    <strong>{{ ::item.num_comments }} comments</strong>
+
+    <comments-list data="comments"></comments-list>
+  </div>
 
 </div>

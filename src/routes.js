@@ -37,7 +37,7 @@ module.exports = function($stateProvider, $urlRouterProvider) {
       template: require('./routes/list/index.html')
     })
     .state('app.comments', {
-      url: '/comments/:id',
+      url: '/:subreddit/comments/:id',
       controllerAs: 'vm',
       controller: require('./routes/comments/index'),
       template: require('./routes/comments/index.html')

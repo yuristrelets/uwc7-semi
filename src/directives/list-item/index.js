@@ -7,7 +7,8 @@ exports.factory = function() {
     restrict: 'E',
     replace: true,
     scope: {
-      item: '='
+      item: '=',
+      noLink: '='
     },
     template: require('./index.html'),
     controller: _controller

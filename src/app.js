@@ -1,7 +1,8 @@
 require('reddit.js');
+
 require('angular');
 require('angular-ui-router');
-
+require('angular-module-sanitize');
 
 // register worker
 navigator
@@ -18,6 +19,7 @@ navigator
 // start app
 var deps = [
   'ui.router',
+  'ngSanitize',
   require('./services/index').name,
   require('./directives/index').name,
   require('./filters/index').name
@@ -27,6 +29,3 @@ angular
   .module('app', deps)
   .value('conf', require('./values'))
   .config(require('./routes'));
-
-
-// hot top new rising controversial gilded wiki ads

@@ -1,0 +1,26 @@
+<div>
+  <div class="comment-header">
+    <span class="comment-fold" ng-click="folded = !folded">
+      <span class="glyphicon glyphicon-minus-sign" ng-show="!folded"></span>
+      <span class="glyphicon glyphicon-plus-sign" ng-show="folded"></span>
+    </span>
+
+    <span class="label label-default">
+      <span class="glyphicon glyphicon-arrow-up"></span> {{ ::comment.score }}
+    </span>
+
+    <span class="label label-comment">
+      <span class="author">{{ ::comment.author }}</span>
+      {{ ::comment.created_utc | timeago }}
+    </span>
+  </div>
+
+  <div ng-show="!folded">
+    <div class="comment-body" markdown="comment.body"></div>
+
+    <div ng-if="comment.replies">
+      <comments-list data="comment.replies.data"></comments-list>
+    </div>
+  </div>
+
+</div>
