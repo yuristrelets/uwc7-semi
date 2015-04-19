@@ -45,7 +45,7 @@
         .then(function (response) {
           console.log('from cache', response);
 
-          if (response) return response;
+          //if (response) return response;
 
           return fetch(request)
             .then(function (response) {
