@@ -3,7 +3,9 @@ exports.inject = function(app) {
 };
 
 exports.factory = function() {
-  console.log(arguments);
+  return function(url) {
+    if('/' === url.charAt(0)) url = url.slice(1);
 
-  return 'asdasdsd';
+    return 'http://reddit.com/' + url;
+  }
 };

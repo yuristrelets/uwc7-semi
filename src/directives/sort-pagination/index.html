@@ -1,0 +1,8 @@
+<div class="btn-group">
+  <button ng-repeat="item in items"
+          class="btn btn-default"
+          ng-class="{ 'btn-primary': item === current }"
+          ng-click="redirect(item)">
+    {{ ::item }}
+  </button>
+</div>

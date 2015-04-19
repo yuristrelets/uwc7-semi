@@ -1,19 +1,18 @@
 <div>
   <nav class="navbar navbar-default navbar-fixed-top navbar-toolbar">
     <div class="container-fluid">
-      <div class="btn-group pull-right">
-        <button ng-repeat="item in vm.sortByList"
-                class="btn btn-default"
-                ng-class="{ 'btn-primary': item == vm.sortBy }">
-          {{ ::item }}
-        </button>
-      </div>
+      <sort-pagination class="pull-right"
+                       items="sortItems">
+      </sort-pagination>
 
-      <pagination items="vm.items"></pagination>
+      <pagination before="before"
+                  after="after"
+                  on-change="onPaginationChange(params)">
+      </pagination>
     </div>
   </nav>
 
-  <div class="media" ng-repeat="item in vm.items">
+  <div class="media" ng-repeat="item in items">
       <div class="media-left" ng-if="item.data.thumbnail">
         <a href="#">
           <img class="media-object" ng-src="{{ ::item.data.thumbnail }}" width="120">
@@ -22,7 +21,7 @@
 
       <div class="media-body">
         <h4 class="media-heading">
-          <a ng-href="{{ ::item.data.url }}" target="_blank">{{ ::item.data.title }}</a>
+          <a ng-href="{{ item.data.permalink | redditUrl }}" target="_blank">{{ ::item.data.title }}</a>
         </h4>
 
         <div>
@@ -41,7 +40,7 @@
           {{ ::item.data.created_utc | timeago }} by <span class="author">{{ ::item.data.author }}</span>
         </div>
 
-        <!--<a ng-href="{{ 'http://reddit.com' + item.data.permalink }}" target="_blank">
+        <!--<a ng-href="{{ ::item.data.url }}" target="_blank">
           {{ ::item.data.num_comments }} comments
         </a>-->
       </div>

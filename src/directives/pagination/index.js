@@ -6,40 +6,62 @@ exports.factory = function() {
   return {
     restrict: 'E',
     scope: {
-      items: '='
+      before: '=',
+      after: '=',
+      onChange: '&'
     },
     template: require('./index.html'),
-    controllerAs: 'vm',
-    controller: Controller,
-    link: function(scope, element) {
-      console.log('pagination', scope);
-    }
+    controller: _controller
   }
 };
 
-function Controller($scope, $state, $stateParams) {
-  var vm = this;
-
-  vm.before = null;
-  vm.after = null;
-
-  var len = $scope.items.length;
-
-  if(len) {
-    vm.before = $scope.items[0].data.name;
-    vm.after = $scope.items[len - 1].data.name;
-  }
-
-  $scope.$watch('items', function(nv) {
-    console.log('$watch', nv);
+function _controller($scope, conf) {
+  angular.extend($scope, {
+    // methods
+    prev: _prev,
+    next: _next
   });
 
-  console.log('!!!!', this);
-
-  vm.go = function(after) {
-    $stateParams.after = after;
-    $state.go('app.list', $stateParams);
+  var _state = {
+    count: 0,
+    before: null,
+    after: null
   };
 
+  // ================================================
 
+  /**
+   * Go to next page.
+   * @private
+   */
+  function _next() {
+    _redirect({
+      before: null,
+      after: $scope.after,
+      count: (_state.before ? _state.count - 1 : _state.count + conf.reddit.perPage)
+    });
+  }
+
+  /**
+   * Go to previous page.
+   * @private
+   */
+  function _prev() {
+    _redirect({
+      after: null,
+      before: $scope.before,
+      count: (_state.after ? _state.count + 1 : _state.count - conf.reddit.perPage)
+    });
+  }
+
+  /**
+   * Performs redirect.
+   * @param params
+   * @private
+   */
+  function _redirect(params) {
+    angular.extend(_state, params);
+
+    $scope.onChange({ params: params });
+  }
 }

@@ -2,13 +2,16 @@ module.exports = function($stateProvider, $urlRouterProvider) {
 
   $urlRouterProvider
     .when('/?', function($location) {
-      var url = decodeURIComponent($location.url());
-      console.log(url, url.replace('/?', ''));
-      return url.replace('/?', '');
+      var url = $location.url();
+      url = decodeURIComponent(url).replace('/?', '');
+
+      if(url.charAt(0) === '/')  {
+        url = url.slice(1);
+      }
+
+      return '/r/' + url;
     })
     .otherwise('/');
-
-  $urlRouterProvider.when('/?', '/');
 
   $stateProvider
     .state('app', {
@@ -22,7 +25,7 @@ module.exports = function($stateProvider, $urlRouterProvider) {
       template: 'index page'
     })
     .state('app.list', {
-      url: '/:subreddit/:sort?after&before&count',
+      url: '/r/:subreddit/:sort',
       params: {
         sort: {
           value: 'hot',
@@ -34,7 +37,7 @@ module.exports = function($stateProvider, $urlRouterProvider) {
       template: require('./routes/list/index.html')
     })
     .state('app.comments', {
-      url: '/:subreddit/comments/:id',
+      url: '/comments/:id',
       controllerAs: 'vm',
       controller: require('./routes/comments/index'),
       template: require('./routes/comments/index.html')

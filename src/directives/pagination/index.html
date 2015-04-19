@@ -1,11 +1,13 @@
 <div class="btn-group">
   <button class="btn btn-default"
-          ng-click="vm.go(vm.before)">
+          ng-disabled="!before"
+          ng-click="prev()">
     <span class="glyphicon glyphicon-chevron-left"></span> Previous
   </button>
 
   <button class="btn btn-default"
-          ng-click="vm.go(vm.after)">
+          ng-disabled="!after"
+          ng-click="next()">
     <span class="glyphicon glyphicon-chevron-right"></span> Next
   </button>
 </div>
