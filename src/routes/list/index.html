@@ -12,38 +12,7 @@
     </div>
   </nav>
 
-  <div class="media" ng-repeat="item in items">
-      <div class="media-left" ng-if="item.data.thumbnail">
-        <a href="#">
-          <img class="media-object" ng-src="{{ ::item.data.thumbnail }}" width="120">
-        </a>
-      </div>
-
-      <div class="media-body">
-        <h4 class="media-heading">
-          <a ng-href="{{ item.data.permalink | redditUrl }}" target="_blank">{{ ::item.data.title }}</a>
-        </h4>
-
-        <div>
-          <span class="label label-primary">{{ ::item.data.domain }}</span>
-
-          <span class="label label-default">
-            <span class="glyphicon glyphicon-arrow-up"></span> {{ ::item.data.score }}
-          </span>
-
-          <span class="label label-default">
-            <span class="glyphicon glyphicon-comment"></span> {{ ::item.data.num_comments }}
-          </span>
-        </div>
-
-        <div class="info">
-          {{ ::item.data.created_utc | timeago }} by <span class="author">{{ ::item.data.author }}</span>
-        </div>
-
-        <!--<a ng-href="{{ ::item.data.url }}" target="_blank">
-          {{ ::item.data.num_comments }} comments
-        </a>-->
-      </div>
-  </div>
-
+  <list-item ng-repeat="item in items"
+             item="item.data">
+  </list-item>
 </div>
