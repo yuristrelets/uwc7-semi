@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  var REDDIT_URL = 'http://www.reddit.com/';
+  var REDDIT_URL = 'https://www.reddit.com/';
 
   var STATIC_CACHE_ID = 'static-cache-v1';
   var REDDIT_CACHE_ID = 'reddit-cache-v1';
