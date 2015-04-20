@@ -29,7 +29,12 @@ function _controller($scope, $state, $stateParams) {
    * @private
    */
   function _redirect(item) {
-    $stateParams.sort = item;
-    $state.go('app.list', $stateParams);
+    $state.go('app.list', {
+      subreddit: $stateParams.subreddit,
+      sort: item,
+      before: null,
+      after: null,
+      count: null
+    });
   }
 }
