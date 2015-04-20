@@ -26,7 +26,6 @@ module.exports = function($scope, $window, $stateParams, Reddit) {
   }
 
   function _success(res) {
-    console.log(res);
     $scope.$evalAsync(function() {
       $scope.item = res[0].data.children[0].data;
       $scope.comments = res[1].data;

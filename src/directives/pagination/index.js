@@ -56,8 +56,6 @@ function _controller($scope, conf, $state, $stateParams) {
    */
   function _redirect(params) {
     angular.extend(_state, params);
-
-    console.log(_state);
     $state.go('app.list', _state);
   }
 }

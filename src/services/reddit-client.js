@@ -4,6 +4,12 @@ exports.inject = function(app) {
 
 exports.factory = function(conf) {
 
+  /**
+   * Load subreddit page.
+   * @param params
+   * @returns {Function}
+   * @private
+   */
   function _subreddit(params) {
     if(-1 === conf.reddit.sortBy.indexOf(params.sort)) {
       params.sort = conf.reddit.sortBy[0];
@@ -21,9 +27,21 @@ exports.factory = function(conf) {
     return request.fetch;
   }
 
+  /**
+   * Load comments page.
+   * @param subreddit
+   * @param id
+   * @returns {Function}
+   * @private
+   */
   function _comments(subreddit, id) {
     return reddit.comments(id, subreddit).fetch;
   }
+
+
+  /**
+   * Export
+   */
 
   return {
     subreddit: _subreddit,

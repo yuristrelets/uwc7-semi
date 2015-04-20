@@ -20,6 +20,7 @@ module.exports = function($stateProvider, $urlRouterProvider) {
   $stateProvider
     .state('app', {
       abstract: true,
+      controller: require('./routes/index'),
       template: require('./routes/index.html')
     })
     .state('app.home', {

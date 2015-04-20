@@ -21,6 +21,3 @@ require('./services/service-worker')
   .register(function() {
     angular.bootstrap(document, ['app']);
   });
-
-window.addEventListener('online', function() { console.log('online'); });
-window.addEventListener('offline', function() { console.log('offline'); });
