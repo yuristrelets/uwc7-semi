@@ -1,3 +1,5 @@
+var conf = require('../values');
+
 exports.inject = function(app) {
   app.factory('ServiceWorker', exports.factory);
 };
@@ -17,7 +19,7 @@ exports.register = function(appstart) {
 
   navigator
     .serviceWorker
-    .register('worker.js', { scope: '/uwc7-semi/' })
+    .register('worker.js', { scope: conf.serviceWorker.scope })
     .then(function() {
       console.info('Service worker registered!');
       appstart();
