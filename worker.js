@@ -37,6 +37,7 @@
           // assume static content
           // TODO return basic content
           if(cacheResponse && 'opaque' === cacheResponse.type) {
+            console.log(cacheResponse);
             return cacheResponse;
           }
 
