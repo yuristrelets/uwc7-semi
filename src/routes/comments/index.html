@@ -4,10 +4,6 @@
       <button class="btn btn-default" ng-click="back()">
         <span class="glyphicon glyphicon-arrow-left"></span> Go back
       </button>
-
-      <button class="btn btn-default" ng-click="reload()">
-        <span class="glyphicon glyphicon-refresh"></span>
-      </button>
     </div>
   </nav>
 
@@ -17,7 +13,7 @@
 
   <p class="article-body"
      ng-show="item.selftext"
-     markdown="item.selftext"
+     ng-bind-html="item.selftext_html | trustHtml"
      external-linker>
   </p>
 

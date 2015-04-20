@@ -4,12 +4,8 @@ module.exports = function($scope, $window, $stateParams) {
     comments: null,
 
     // methods
-    back: _back,
-    reload: _reload
+    back: _back
   });
-
-  console.log('hello!');
-  console.log($stateParams);
 
   _load();
 
@@ -37,10 +33,6 @@ module.exports = function($scope, $window, $stateParams) {
 
   function _back() {
     $window.history.back();
-  }
-
-  function _reload() {
-    $window.location.reload();
   }
 
 };

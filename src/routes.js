@@ -25,10 +25,14 @@ module.exports = function($stateProvider, $urlRouterProvider) {
       template: 'index page'
     })
     .state('app.list', {
-      url: '/r/:subreddit/:sort',
+      url: '/r/:subreddit/:sort?after&before&{count:int}',
       params: {
         sort: {
           value: 'hot',
+          squash: true
+        },
+        count: {
+          value: 0,
           squash: true
         }
       },

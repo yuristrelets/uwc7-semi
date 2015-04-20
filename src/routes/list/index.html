@@ -6,8 +6,7 @@
       </sort-pagination>
 
       <pagination before="before"
-                  after="after"
-                  on-change="onPaginationChange(params)">
+                  after="after">
       </pagination>
     </div>
   </nav>
@@ -15,4 +14,8 @@
   <list-item ng-repeat="item in items"
              item="item.data">
   </list-item>
+
+  <div class="message" ng-show="error">
+    Something went wrong! Check your network connection.
+  </div>
 </div>

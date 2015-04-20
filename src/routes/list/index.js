@@ -1,16 +1,18 @@
 module.exports = function($scope, $stateParams, conf, Reddit) {
   angular.extend($scope, {
     items: [],
+    error: false,
     before: null,
     after: null,
-    sortItems: conf.reddit.sortBy,
-
-    // methods
-    onPaginationChange: _loadSubreddit
+    sortItems: conf.reddit.sortBy
   });
 
   // init
-  _loadSubreddit();
+  _loadSubreddit({
+    before: $stateParams.before,
+    after: $stateParams.after,
+    count: $stateParams.count
+  });
 
   // ===================================================
 
@@ -31,8 +33,10 @@ module.exports = function($scope, $stateParams, conf, Reddit) {
           $scope.after = res.data.after;
         });
       },
-      function _error(err) {
-        console.log(err);
+      function _error() {
+        $scope.$evalAsync(function() {
+          $scope.error = true;
+        });
       }
     );
   }

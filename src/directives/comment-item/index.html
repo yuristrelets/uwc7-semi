@@ -16,7 +16,9 @@
   </div>
 
   <div ng-show="!folded">
-    <div class="comment-body" markdown="comment.body"></div>
+    <div class="comment-body"
+         ng-bind-html="comment.body_html | trustHtml">
+    </div>
 
     <div ng-if="comment.replies">
       <comments-list data="comment.replies.data"></comments-list>

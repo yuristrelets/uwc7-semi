@@ -7,26 +7,21 @@ exports.factory = function() {
     restrict: 'E',
     scope: {
       before: '=',
-      after: '=',
-      onChange: '&'
+      after: '='
     },
     template: require('./index.html'),
     controller: _controller
   }
 };
 
-function _controller($scope, conf) {
+function _controller($scope, conf, $state, $stateParams) {
   angular.extend($scope, {
     // methods
     prev: _prev,
     next: _next
   });
 
-  var _state = {
-    count: 0,
-    before: null,
-    after: null
-  };
+  var _state = $stateParams;
 
   // ================================================
 
@@ -62,6 +57,7 @@ function _controller($scope, conf) {
   function _redirect(params) {
     angular.extend(_state, params);
 
-    $scope.onChange({ params: params });
+    console.log(_state);
+    $state.go('app.list', _state);
   }
 }

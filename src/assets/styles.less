@@ -38,8 +38,21 @@ body {
   }
 }
 
+.navbar {
+  .dropdown-menu {
+    display: block;
+  }
+
+  .dropdown-toggle {
+    font-size: 26px;
+    padding-top: 12px!important;
+    padding-bottom: 12px!important;
+  }
+}
+
 .navbar-toolbar {
   top: 50px!important;
+  z-index: 1000!important;
 
   > div {
     margin-top: 8px;
@@ -149,5 +162,21 @@ body {
     ul {
       list-style: disc;
     }
+
+    blockquote {
+      font-size: 14px!important;
+      background-color: #f9f9f9;
+    }
   }
+}
+
+.service-worker {
+
+}
+
+.message {
+  font-size: 22px;
+  margin-top: 20px;
+  text-align: center;
+  color: #666;
 }

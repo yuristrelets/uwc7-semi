@@ -1,13 +1,11 @@
 (function() {
   'use strict';
 
-  var LOCAL_FILES = [
-    'index.html',
-    'app.js'
-  ];
+  var REDDIT_URL = 'http://www.reddit.com/';
 
   var STATIC_CACHE_ID = 'static-cache-v1';
   var REDDIT_CACHE_ID = 'reddit-cache-v1';
+  var REDDIT_STATIC_CACHE_ID = 'reddit-static-cache-v1';
 
   // add polyfill
   importScripts("build/js/sw-cache-polyfill.js");
@@ -19,60 +17,103 @@
 
 
   function onInstall(e) {
-    console.log('install');
-    /*e.waitUntil(
-      caches
-        .open(STATIC_CACHE_ID)
-        .then(function(cache) {
-          return cache.addAll(LOCAL_FILES);
-        })
-    );*/
+    console.log('worker installed');
   }
 
   function onActivate(e) {
-    console.log('activate');
+    console.log('worker activated');
   }
-
 
   function onFetch(e) {
     var request = e.request;
-
-    console.log(e.request.url);
+    //console.log('fetch', request.url);
 
     e.respondWith(
       caches
         .match(request)
-        .then(function (response) {
-          console.log('from cache', response);
+        .then(function(cacheResponse) {
+          //console.log('from cache', cacheResponse);
 
-          //if (response) return response;
+          // assume static content
+          // TODO return basic content
+          if(cacheResponse && 'opaque' === cacheResponse.type) {
+            return cacheResponse;
+          }
 
-          return fetch(request)
-            .then(function (response) {
-              console.log('fetched', response);
-              var response2 = response.clone();
-              var response3 = response.clone();
-
-              if (/.reddit.com/.test(response2.url)) {
-                console.log('hello reddit');
-
-                caches
-                  .open(REDDIT_CACHE_ID)
-                  .then(function (cache) {
-                    cache.put(request, response2);
-                  });
-
-                response3
-                  .json()
-                  .then(function (json) {
-                    console.log('json', json);
-                  });
-              }
-
-              return response;
-            });
+          return _fetch(request, cacheResponse);
         })
     );
+  }
+
+  function _fetch(request, cacheResponse) {
+    return fetch(request)
+      .then(function(response) {
+        //console.log('fetched', response);
+
+        var cacheId;
+        var url = response.url;
+        var responseJson = response.clone();
+        var responseCache = response.clone();
+
+        if('cors' === response.type && /reddit.com/.test(url)) {
+          cacheId = REDDIT_CACHE_ID;
+
+          // parse list pages
+          if(/(hot|new|top|controversial).json/.test(url)) {
+            responseJson.json().then(_cacheList);
+          }
+
+        } else if('basic' === response.type) {
+          cacheId = STATIC_CACHE_ID;
+
+        } else if('opaque' == response.type) {
+          cacheId = REDDIT_STATIC_CACHE_ID;
+        }
+
+        if(cacheId) {
+          caches
+            .open(cacheId)
+            .then(function(cache) {
+              //console.log('cached!');
+              cache.put(request, responseCache);
+            });
+        }
+
+        return response;
+      })
+      .catch(function() {
+        // if response failed
+        // and response exists in cache
+        // return cached response
+        if(cacheResponse) {
+          return cacheResponse;
+        }
+      });
+  }
+
+  /**
+   * Cache all detail links from list.
+   * @param list
+   * @private
+   */
+  function _cacheList(list) {
+    console.log('!!!!!', list);
+    var cacheList = [], parts;
+    list = list.data.children;
+
+    list.forEach(function(item) {
+      // prepare url
+      parts = item.data.permalink.split('/');
+      cacheList.push(REDDIT_URL + parts.slice(1, 5).join('/') + '.json');
+    });
+
+    console.log('!!!!!!!!!', cacheList);
+
+    caches
+      .open(REDDIT_CACHE_ID)
+      .then(function(cache) {
+        return cache.addAll(cacheList);
+      });
   }
 
 })();
