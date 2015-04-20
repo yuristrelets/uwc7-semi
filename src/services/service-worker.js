@@ -10,7 +10,7 @@ exports.factory = function() {
   };
 };
 
-exports.register = function(success) {
+exports.register = function(appstart) {
   if(!'serviceWorker' in navigator) {
     return alert('Your browser is sucks! Use latest version of Chrome.');
   }
@@ -20,9 +20,7 @@ exports.register = function(success) {
     .register('worker.js', { scope: '/uwc7-semi/' })
     .then(function() {
       console.info('Service worker registered!');
-      console.log(navigator.serviceWorker.controller);
-
-      success();
+      appstart();
     })
     .catch(function(error) {
       console.error('Service worker error!', error);

@@ -38,18 +38,6 @@ body {
   }
 }
 
-.navbar {
-  .dropdown-menu {
-    display: block;
-  }
-
-  .dropdown-toggle {
-    font-size: 26px;
-    padding-top: 12px!important;
-    padding-bottom: 12px!important;
-  }
-}
-
 .navbar-toolbar {
   top: 50px!important;
   z-index: 1000!important;
@@ -171,7 +159,11 @@ body {
 }
 
 .service-worker {
-
+  > a {
+    font-size: 26px;
+    padding-top: 12px!important;
+    padding-bottom: 12px!important;
+  }
 }
 
 .message {
@@ -179,4 +171,8 @@ body {
   margin-top: 20px;
   text-align: center;
   color: #666;
+}
+
+.search {
+  width: 400px!important;
 }

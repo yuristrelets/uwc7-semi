@@ -4,19 +4,15 @@ exports.inject = function(app) {
 
 exports.factory = function(conf) {
 
-  function _subreddit(subreddit, sort, options) {
-    if(!subreddit) {
-      throw new Error('Invalid subreddit!');
+  function _subreddit(params) {
+    if(-1 === conf.reddit.sortBy.indexOf(params.sort)) {
+      params.sort = conf.reddit.sortBy[0];
     }
 
-    if(-1 === conf.reddit.sortBy.indexOf(sort)) {
-      throw new Error('Invalid sort type!');
-    }
-
-    var request = reddit[sort](subreddit);
+    var request = reddit[params.sort](params.subreddit);
     request.limit(conf.reddit.perPage);
 
-    angular.forEach(options, function(value, key) {
+    angular.forEach(params, function(value, key) {
       if(value && request[key]) {
         request[key](value);
       }
@@ -25,7 +21,13 @@ exports.factory = function(conf) {
     return request.fetch;
   }
 
-  return {
-    subreddit: _subreddit
+  function _comments(subreddit, id) {
+    return reddit.comments(id, subreddit).fetch;
   }
+
+  return {
+    subreddit: _subreddit,
+    comments: _comments
+  }
+
 };

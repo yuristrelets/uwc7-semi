@@ -5,6 +5,7 @@ exports.inject = function(app) {
 exports.factory = function() {
   return {
     restrict: 'E',
+    replace: true,
     scope: {
     },
     template: require('./index.html'),

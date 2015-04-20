@@ -1,21 +1,10 @@
 <ul class="nav navbar-nav">
-  <li class="dropdown service-worker">
-    <a href class="dropdown-toggle" ng-click="opened = !opened">
-      <span class="glyphicon glyphicon-eye-open"
-            ng-show="active">
-      </span>
-
-      <span class="glyphicon glyphicon-eye-close"
-            ng-hide="active">
+  <li class="service-worker">
+    <a>
+      <span class="glyphicon"
+            ng-class="{ 'glyphicon-eye-open': active, 'glyphicon-eye-close': !active }"
+            title="Service Worker {{ active ? 'active' : 'inactive' }} {{ !active ? '(try to reload page)' : '' }}">
       </span>
     </a>
-
-    <ul class="dropdown-menu pull-right" ng-show="opened">
-      <li>
-        <a href>
-          Service Worker status: <strong>{{ active ? 'active' : 'inactive' }}</strong>
-        </a>
-      </li>
-    </ul>
   </li>
 </ul>

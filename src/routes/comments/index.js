@@ -1,36 +1,48 @@
-module.exports = function($scope, $window, $stateParams) {
+module.exports = function($scope, $window, $stateParams, Reddit) {
   angular.extend($scope, {
     item: null,
     comments: null,
+    error: false,
 
     // methods
     back: _back
   });
 
-  _load();
+  _loadComments($stateParams);
 
   // ========================================
 
-  function _load() {
-    reddit
-      .comments($stateParams.id, $stateParams.subreddit)
-      .fetch(
-        function(res) {
-          console.log(res);
+  /**
+   * Loads
+   * @param params
+   * @private
+   */
+  function _loadComments(params) {
+    if(!params.subreddit || !params.id) {
+      return $state.go('app.404');
+    }
 
-          $scope.$evalAsync(function() {
-            $scope.item = res[0].data.children[0].data;
-            $scope.comments = res[1].data;
-
-            console.log($scope);
-          });
-        },
-        function(err) {
-          console.log(err);
-        }
-      );
+    Reddit.comments(params.subreddit, params.id)(_success, _error);
   }
 
+  function _success(res) {
+    console.log(res);
+    $scope.$evalAsync(function() {
+      $scope.item = res[0].data.children[0].data;
+      $scope.comments = res[1].data;
+    });
+  }
+
+  function _error() {
+    $scope.$evalAsync(function() {
+      $scope.error = true;
+    });
+  }
+
+  /**
+   * Go back handler.
+   * @private
+   */
   function _back() {
     $window.history.back();
   }

@@ -1,6 +1,7 @@
-module.exports = function($scope, $stateParams, conf, Reddit) {
+module.exports = function($scope, $state, $stateParams, conf, Reddit) {
   angular.extend($scope, {
     items: [],
+    subreddit: $stateParams.subreddit,
     error: false,
     before: null,
     after: null,
@@ -8,11 +9,7 @@ module.exports = function($scope, $stateParams, conf, Reddit) {
   });
 
   // init
-  _loadSubreddit({
-    before: $stateParams.before,
-    after: $stateParams.after,
-    count: $stateParams.count
-  });
+  _loadSubreddit($stateParams);
 
   // ===================================================
 
@@ -22,23 +19,26 @@ module.exports = function($scope, $stateParams, conf, Reddit) {
    * @private
    */
   function _loadSubreddit(params) {
-    var request = Reddit.subreddit($stateParams.subreddit, $stateParams.sort, params || {});
+    if(!params.subreddit) {
+      return $state.go('app.404');
+    }
 
-    request(
-      function _success(res) {
-        console.log(res);
-        $scope.$evalAsync(function() {
-          $scope.items = res.data.children;
-          $scope.before = res.data.before;
-          $scope.after = res.data.after;
-        });
-      },
-      function _error() {
-        $scope.$evalAsync(function() {
-          $scope.error = true;
-        });
-      }
-    );
+    Reddit.subreddit(params)(_success, _error);
+  }
+
+  function _success(res) {
+    console.log(res);
+    $scope.$evalAsync(function() {
+      $scope.items = res.data.children;
+      $scope.before = res.data.before;
+      $scope.after = res.data.after;
+    });
+  }
+
+  function _error() {
+    $scope.$evalAsync(function() {
+      $scope.error = true;
+    });
   }
 
 };
