@@ -70,7 +70,7 @@
           cacheId = REDDIT_STATIC_CACHE_ID;
         }
 
-        if(cacheId) {
+        if(cacheId && response.status < 400) {
           caches
             .open(cacheId)
             .then(function(cache) {

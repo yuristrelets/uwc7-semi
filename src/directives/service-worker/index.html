@@ -2,12 +2,10 @@
   <li class="dropdown service-worker">
     <a href class="dropdown-toggle" ng-click="opened = !opened">
       <span class="glyphicon glyphicon-eye-open"
-            title="Service Worker active"
             ng-show="active">
       </span>
 
       <span class="glyphicon glyphicon-eye-close"
-            title="Service Worker inactive"
             ng-hide="active">
       </span>
     </a>
@@ -18,8 +16,6 @@
           Service Worker status: <strong>{{ active ? 'active' : 'inactive' }}</strong>
         </a>
       </li>
-      <li class="divider"></li>
-      <li><a href>Clear cache</a></li>
     </ul>
   </li>
 </ul>

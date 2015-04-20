@@ -9,7 +9,11 @@ module.exports = function($stateProvider, $urlRouterProvider) {
         url = url.slice(1);
       }
 
-      return '/r/' + url;
+      if(url) {
+        return '/r/' + url;
+      }
+
+      return false;
     })
     .otherwise('/');
 
@@ -20,9 +24,7 @@ module.exports = function($stateProvider, $urlRouterProvider) {
     })
     .state('app.home', {
       url: '/',
-      /*controllerAs: 'vm',
-      controller: require('./routes/list/index'),*/
-      template: 'index page'
+      template: require('./routes/index/index.html')
     })
     .state('app.list', {
       url: '/r/:subreddit/:sort?after&before&{count:int}',
