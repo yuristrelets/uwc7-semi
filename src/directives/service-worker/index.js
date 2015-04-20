@@ -17,8 +17,4 @@ function _controller($scope, ServiceWorker) {
   angular.extend($scope, {
     active: ServiceWorker.active
   });
-
-  // ================================================
-
-
 }

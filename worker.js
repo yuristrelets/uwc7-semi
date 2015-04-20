@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  var REDDIT_URL = 'http://www.reddit.com/';
+  var REDDIT_URL = '//www.reddit.com/';
 
   var STATIC_CACHE_ID = 'static-cache-v1';
   var REDDIT_CACHE_ID = 'reddit-cache-v1';
@@ -15,7 +15,6 @@
   self.addEventListener('activate', onActivate);
   self.addEventListener('fetch', onFetch);
 
-
   function onInstall(e) {
     console.log('worker installed');
   }
@@ -26,14 +25,11 @@
 
   function onFetch(e) {
     var request = e.request;
-    //console.log('fetch', request.url);
 
     e.respondWith(
       caches
         .match(request)
         .then(function(cacheResponse) {
-          //console.log('from cache', cacheResponse);
-
           // assume static content
           // TODO return basic content
           if(cacheResponse && 'opaque' === cacheResponse.type) {
@@ -48,8 +44,6 @@
   function _fetch(request, cacheResponse) {
     return fetch(request)
       .then(function(response) {
-        //console.log('fetched', response);
-
         var cacheId;
         var url = response.url;
         var responseJson = response.clone();
@@ -74,7 +68,6 @@
           caches
             .open(cacheId)
             .then(function(cache) {
-              //console.log('cached!');
               cache.put(request, responseCache);
             });
         }
@@ -97,7 +90,6 @@
    * @private
    */
   function _cacheList(list) {
-    console.log('!!!!!', list);
     var cacheList = [], parts;
     list = list.data.children;
 
@@ -106,8 +98,6 @@
       parts = item.data.permalink.split('/');
       cacheList.push(REDDIT_URL + parts.slice(1, 5).join('/') + '.json');
     });
-
-    console.log('!!!!!!!!!', cacheList);
 
     caches
       .open(REDDIT_CACHE_ID)

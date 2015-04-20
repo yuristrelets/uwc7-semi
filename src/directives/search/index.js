@@ -27,7 +27,14 @@ function _controller($scope, $state) {
    */
   function _submit() {
     if($scope.search) {
-      $state.go('app.list', { subreddit: $scope.search });
+      $state.go('app.list', {
+        subreddit: $scope.search,
+        sort: null,
+        after: null,
+        before: null,
+        count: null
+      });
+
       $scope.search = null;
     }
   }

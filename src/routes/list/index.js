@@ -27,7 +27,6 @@ module.exports = function($scope, $state, $stateParams, conf, Reddit) {
   }
 
   function _success(res) {
-    console.log(res);
     $scope.$evalAsync(function() {
       $scope.items = res.data.children;
       $scope.before = res.data.before;

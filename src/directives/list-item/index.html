@@ -1,8 +1,6 @@
 <div class="media">
   <div class="media-left" ng-if="isImageValid(item.thumbnail)">
-    <a href="">
-      <img class="media-object" ng-src="{{ ::item.thumbnail }}" width="120">
-    </a>
+    <img class="media-object" ng-src="{{ ::item.thumbnail }}" width="120">
   </div>
 
   <div class="media-body">
@@ -25,6 +23,12 @@
 
       <span class="label label-default">
         <span class="glyphicon glyphicon-comment"></span> {{ ::item.num_comments }}
+      </span>
+
+      <span>
+        <a ng-href="{{ ::item.url }}"
+           ng-if="!noLink"
+           target="_blank">Direct URL</a>
       </span>
     </div>
 
