@@ -27,7 +27,7 @@ module.exports = function($stateProvider, $urlRouterProvider) {
       template: require('./routes/index/index.html')
     })
     .state('app.list', {
-      url: '/r/:subreddit/:sort?after&before&{count:int}',
+      url: '/r/{subreddit:.{3,}}/:sort?after&before&{count:int}',
       params: {
         sort: {
           value: 'hot',
@@ -43,7 +43,7 @@ module.exports = function($stateProvider, $urlRouterProvider) {
       template: require('./routes/list/index.html')
     })
     .state('app.comments', {
-      url: '/:subreddit/comments/:id',
+      url: '/{subreddit:.{3,}}/comments/{id:.{3,}}',
       controllerAs: 'vm',
       controller: require('./routes/comments/index'),
       template: require('./routes/comments/index.html')
