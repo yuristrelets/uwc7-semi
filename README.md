@@ -28,7 +28,8 @@ npm i
 
 ## Зависимости
 
- * angular, ui-router
+ * angular, ui-router,
+ * bootstrap
  * browserify сборка
  * [reddit.js](https://github.com/sahilm/reddit.js) (не очень удачный выбор)
 
